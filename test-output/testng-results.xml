@@ -14,16 +14,16 @@
       <![CDATA[<br>Current Xml Suite is:---->LoginTest (0)]]>
     </line>
   </reporter-output>
-  <suite started-at="2022-09-07T04:23:26Z" name="LoginTest (0)" finished-at="2022-09-07T04:23:53Z" duration-ms="26827">
+  <suite started-at="2022-09-07T10:43:00Z" name="LoginTest (0)" finished-at="2022-09-07T10:43:32Z" duration-ms="31827">
     <groups>
     </groups>
-    <test started-at="2022-09-07T04:23:26Z" name="Try to login with positive Senario" finished-at="2022-09-07T04:23:53Z" duration-ms="26827">
+    <test started-at="2022-09-07T10:43:00Z" name="Try to login with positive Senario" finished-at="2022-09-07T10:43:32Z" duration-ms="31827">
       <class name="com.qa.orange.testcases.InvalidLoginTest">
-        <test-method is-config="true" signature="config()[pri:0, instance:com.qa.orange.testcases.InvalidLoginTest@49139829]" started-at="2022-09-07T04:23:26Z" name="config" finished-at="2022-09-07T04:23:26Z" duration-ms="0" status="PASS">
+        <test-method is-config="true" signature="config()[pri:0, instance:com.qa.orange.testcases.InvalidLoginTest@49139829]" started-at="2022-09-07T10:43:00Z" name="config" finished-at="2022-09-07T10:43:00Z" duration-ms="2" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- config -->
-        <test-method is-config="true" signature="setup(org.testng.ITestContext)[pri:0, instance:com.qa.orange.testcases.InvalidLoginTest@49139829]" started-at="2022-09-07T04:23:26Z" name="setup" finished-at="2022-09-07T04:23:30Z" duration-ms="3516" status="PASS">
+        <test-method is-config="true" signature="setup(org.testng.ITestContext)[pri:0, instance:com.qa.orange.testcases.InvalidLoginTest@49139829]" started-at="2022-09-07T10:43:00Z" name="setup" finished-at="2022-09-07T10:43:08Z" duration-ms="8283" status="PASS">
           <params>
             <param index="0">
               <value>
@@ -40,31 +40,31 @@
             </line>
           </reporter-output>
         </test-method> <!-- setup -->
-        <test-method signature="validLogin()[pri:1, instance:com.qa.orange.testcases.InvalidLoginTest@49139829]" started-at="2022-09-07T04:23:30Z" name="validLogin" description="Valid Login" finished-at="2022-09-07T04:23:43Z" duration-ms="13291" status="PASS">
+        <test-method signature="validLogin()[pri:1, instance:com.qa.orange.testcases.InvalidLoginTest@49139829]" started-at="2022-09-07T10:43:08Z" name="validLogin" description="Valid Login" finished-at="2022-09-07T10:43:22Z" duration-ms="13505" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- validLogin -->
-        <test-method is-config="true" signature="close()[pri:0, instance:com.qa.orange.testcases.InvalidLoginTest@49139829]" started-at="2022-09-07T04:23:43Z" name="close" finished-at="2022-09-07T04:23:53Z" duration-ms="10018" status="PASS">
+        <test-method is-config="true" signature="close()[pri:0, instance:com.qa.orange.testcases.InvalidLoginTest@49139829]" started-at="2022-09-07T10:43:22Z" name="close" finished-at="2022-09-07T10:43:32Z" duration-ms="10034" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- close -->
-        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.qa.orange.testcases.InvalidLoginTest@49139829]" started-at="2022-09-07T04:23:53Z" name="tearDown" finished-at="2022-09-07T04:23:53Z" duration-ms="0" status="PASS">
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.qa.orange.testcases.InvalidLoginTest@49139829]" started-at="2022-09-07T10:43:32Z" name="tearDown" finished-at="2022-09-07T10:43:32Z" duration-ms="0" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->
       </class> <!-- com.qa.orange.testcases.InvalidLoginTest -->
     </test> <!-- Try to login with positive Senario -->
   </suite> <!-- LoginTest (0) -->
-  <suite started-at="2022-09-07T04:23:03Z" name="LoginTest" finished-at="2022-09-07T04:23:26Z" duration-ms="23065">
+  <suite started-at="2022-09-07T10:42:31Z" name="LoginTest" finished-at="2022-09-07T10:43:00Z" duration-ms="29348">
     <groups>
     </groups>
-    <test started-at="2022-09-07T04:23:03Z" name="Try to login with positive Senario" finished-at="2022-09-07T04:23:26Z" duration-ms="23065">
+    <test started-at="2022-09-07T10:42:31Z" name="Try to login with positive Senario" finished-at="2022-09-07T10:43:00Z" duration-ms="29348">
       <class name="com.qa.orange.testcases.LoginPageTest">
-        <test-method is-config="true" signature="config()[pri:0, instance:com.qa.orange.testcases.LoginPageTest@dd8ba08]" started-at="2022-09-07T04:23:03Z" name="config" finished-at="2022-09-07T04:23:03Z" duration-ms="174" status="PASS">
+        <test-method is-config="true" signature="config()[pri:0, instance:com.qa.orange.testcases.LoginPageTest@dd8ba08]" started-at="2022-09-07T10:42:31Z" name="config" finished-at="2022-09-07T10:42:31Z" duration-ms="325" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- config -->
-        <test-method is-config="true" signature="setup(org.testng.ITestContext)[pri:0, instance:com.qa.orange.testcases.LoginPageTest@dd8ba08]" started-at="2022-09-07T04:23:03Z" name="setup" finished-at="2022-09-07T04:23:10Z" duration-ms="6552" status="PASS">
+        <test-method is-config="true" signature="setup(org.testng.ITestContext)[pri:0, instance:com.qa.orange.testcases.LoginPageTest@dd8ba08]" started-at="2022-09-07T10:42:31Z" name="setup" finished-at="2022-09-07T10:42:44Z" duration-ms="12440" status="PASS">
           <params>
             <param index="0">
               <value>
@@ -81,15 +81,15 @@
             </line>
           </reporter-output>
         </test-method> <!-- setup -->
-        <test-method signature="validLogin()[pri:1, instance:com.qa.orange.testcases.LoginPageTest@dd8ba08]" started-at="2022-09-07T04:23:10Z" name="validLogin" description="Valid Login" finished-at="2022-09-07T04:23:16Z" duration-ms="6295" status="PASS">
+        <test-method signature="validLogin()[pri:1, instance:com.qa.orange.testcases.LoginPageTest@dd8ba08]" started-at="2022-09-07T10:42:44Z" name="validLogin" description="Valid Login" finished-at="2022-09-07T10:42:50Z" duration-ms="6504" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- validLogin -->
-        <test-method is-config="true" signature="close()[pri:0, instance:com.qa.orange.testcases.LoginPageTest@dd8ba08]" started-at="2022-09-07T04:23:16Z" name="close" finished-at="2022-09-07T04:23:26Z" duration-ms="10033" status="PASS">
+        <test-method is-config="true" signature="close()[pri:0, instance:com.qa.orange.testcases.LoginPageTest@dd8ba08]" started-at="2022-09-07T10:42:50Z" name="close" finished-at="2022-09-07T10:43:00Z" duration-ms="10053" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- close -->
-        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.qa.orange.testcases.LoginPageTest@dd8ba08]" started-at="2022-09-07T04:23:26Z" name="tearDown" finished-at="2022-09-07T04:23:26Z" duration-ms="1" status="PASS">
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.qa.orange.testcases.LoginPageTest@dd8ba08]" started-at="2022-09-07T10:43:00Z" name="tearDown" finished-at="2022-09-07T10:43:00Z" duration-ms="5" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->
