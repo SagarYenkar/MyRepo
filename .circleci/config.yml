@@ -2,7 +2,7 @@
 version: 2.1
 
 jobs:
-
+ 
   test:
 
     docker:
@@ -39,17 +39,19 @@ jobs:
 
     docker:
 
-      - image: cimg/base:stable
+       - image: cimg/openjdk:16.0
 
     steps:
 
       - checkout
 
       - run:
-
-          name: "This is prod job"
-
-          command: "echo This is prod job"
+          name: Build
+          command: mvn -B -DskipTests clean package
+      # Then run your tests!
+      - run:
+          name: Test
+          command: mvn test
 
          
 
@@ -58,7 +60,7 @@ workflows:
   test_build_prod:
 
     jobs:
-
+        
       - test
 
       - prod:
