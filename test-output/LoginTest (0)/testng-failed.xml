@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [LoginTest (0)]" guice-stage="DEVELOPMENT" verbose="0">
+  <parameter name="selenium.port" value="4444"/>
+  <parameter name="selenium.host" value="192.168.43.176"/>
+  <parameter name="selenium.browser" value="chrome"/>
+  <test thread-count="5" name="Try to login with positive Senario(failed)" verbose="0">
+    <classes>
+      <class name="com.qa.orange.testcases.InvalidLoginTest">
+        <methods>
+          <include name="tearDown"/>
+          <include name="close"/>
+          <include name="setup"/>
+          <include name="config"/>
+          <include name="validLogin"/>
+        </methods>
+      </class> <!-- com.qa.orange.testcases.InvalidLoginTest -->
+    </classes>
+  </test> <!-- Try to login with positive Senario(failed) -->
+</suite> <!-- Failed suite [LoginTest (0)] -->

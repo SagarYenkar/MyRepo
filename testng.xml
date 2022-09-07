@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+
+	<parameter name="selenium.host" value="192.168.43.176" />
+
+	<!-- Put Port of localhost RC/Grid Hub machine -->
+	<parameter name="selenium.port" value="4444" />
+
+	<!-- Put target browser name as below: 1) Firefox : firefox 2) chrome : 
+		chrome 3) IExplorer : ie8 / ie9 4) Headless : headless -->
+	<parameter name="selenium.browser" value="headless" />
+	<test name="Test">
+		<classes>
+			<class name="com.qa.fintech.testcases.LoginPageTest" />
+			<class name="com.qa.fintech.testcases.InvalidLoginTest" />
+			
+		</classes>
+	</test> <!-- Test -->
+</suite> <!-- Suite -->
