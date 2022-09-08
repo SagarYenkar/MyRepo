@@ -1,0 +1,93 @@
+
+version: 2.1
+<<<<<<< HEAD
+  
+
+jobs:
+  
+  build-and-test:
+  
+   
+    docker:
+      - image: cimg/openjdk:16.0
+   
+    steps:
+     
+      - checkout
+      
+=======
+
+jobs:
+ 
+  test:
+
+    docker:
+
+      - image: cimg/base:stable
+
+    steps:
+
+      - checkout
+
+      - run:
+
+          name: "This is build job"
+
+          command: "echo This is build job"
+
+  build:
+
+    docker:
+
+      - image: cimg/base:stable
+
+    steps:
+
+      - checkout
+
+      - run:
+
+          name: "This is test job"
+
+          command: "echo This is test job"
+
+  prod:
+
+    docker:
+
+       - image: cimg/openjdk:16.0
+
+    steps:
+
+      - checkout
+
+>>>>>>> e749646e84ad27e873924bbd4289f50c2c74c2e1
+      - run:
+          name: Build
+          command: mvn -B -DskipTests clean package
+      # Then run your tests!
+      - run:
+          name: Test
+          command: mvn test
+
+         
+
+workflows:
+
+  test_build_prod:
+
+    jobs:
+        
+      - test
+
+      - prod:
+
+          requires:
+
+              - test
+
+      - build:
+
+         requires:
+
+           - prod
