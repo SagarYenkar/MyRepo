@@ -145,10 +145,15 @@ public class BaseClass {
 			//add the headless argument
 	      //  options.addArguments("headless");
 			options.addArguments("--disable-gpu");
+			System.out.print("stmt1");
 			options.addArguments("--no-sandbox");
+			System.out.print("stmt2");
 			options.addArguments("--start-maximized");
+			System.out.print("stmt3");
 			options.addArguments("--window-size=1325x744");
+			System.out.print("stmt4");
 	        driver = new ChromeDriver(options);
+	    	System.out.print("stmt5");
 	        driver.manage().timeouts().pageLoadTimeout(TestUtil.PAGE_LOAD_TIMEOUT, TimeUnit.SECONDS);
 			logger.info("PageLoad wait given");
 			driver.manage().timeouts().implicitlyWait(TestUtil.IMPLICIT_WAIT, TimeUnit.SECONDS);
