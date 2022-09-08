@@ -1,14 +1,8 @@
 
 version: 2.1
-orbs:
-  win: circleci/windows@4.1.1 # The Windows orb give you everything you need to start using the Windows executor.
 
 jobs:
-    build: # name of your job
-    resource_class: 'windows.medium'
-    machine:
-      image: 'windows-server-2022-gui:current'
-      shell: 'powershell.exe -ExecutionPolicy Bypass'
+ 
   test:
 
     docker:
