@@ -8,7 +8,7 @@
 
 	<!-- Put target browser name as below: 1) Firefox : firefox 2) chrome : 
 		chrome 3) IExplorer : ie8 / ie9  Hedless :- headless -->
-	<parameter name="selenium.browser" value="headless"/>
+	<parameter name="selenium.browser" value="chrome"/>
   
     <test  name="Try to login with positive Senario">
     <classes>
