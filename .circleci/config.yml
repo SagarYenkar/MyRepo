@@ -1,21 +1,5 @@
 
 version: 2.1
-<<<<<<< HEAD
-  
-
-jobs:
-  
-  build-and-test:
-  
-   
-    docker:
-      - image: cimg/openjdk:16.0
-   
-    steps:
-     
-      - checkout
-      
-=======
 
 jobs:
  
@@ -61,7 +45,6 @@ jobs:
 
       - checkout
 
->>>>>>> e749646e84ad27e873924bbd4289f50c2c74c2e1
       - run:
           name: Build
           command: mvn -B -DskipTests clean package
