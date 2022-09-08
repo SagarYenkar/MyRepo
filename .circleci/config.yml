@@ -1,76 +1,29 @@
-
 version: 2.1
 
+orbs:
+  win: circleci/windows@4.1.1 # The Windows orb gives you everything you need to start using the Windows executor
 jobs:
- 
-  test:
-
+  
+  build-and-test:
+    executor: win/server-2022 # use one of the executors defined within the windows orb
     docker:
-
-      - image: cimg/base:stable
-
+      - image: cimg/openjdk:16.0
+    
     steps:
-
+     
       - checkout
-
-      - run:
-
-          name: "This is build job"
-
-          command: "echo This is build job"
-
-  build:
-
-    docker:
-
-      - image: cimg/base:stable
-
-    steps:
-
-      - checkout
-
-      - run:
-
-          name: "This is test job"
-
-          command: "echo This is test job"
-
-  prod:
-
-    docker:
-
-       - image: cimg/openjdk:16.0
-
-    steps:
-
-      - checkout
-
+      - run: Write-Host 'Hello, Windows'
       - run:
           name: Build
           command: mvn -B -DskipTests clean package
-      # Then run your tests!
+      
       - run:
           name: Test
           command: mvn test
 
-         
 
 workflows:
-
-  test_build_prod:
+  sample: 
 
     jobs:
-        
-      - test
-
-      - prod:
-
-          requires:
-
-              - test
-
-      - build:
-
-         requires:
-
-           - prod
+      - build-and-test
