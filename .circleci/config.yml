@@ -1,5 +1,6 @@
 
 version: 2.1
+<<<<<<< HEAD
   
 
 jobs:
@@ -14,6 +15,53 @@ jobs:
      
       - checkout
       
+=======
+
+jobs:
+ 
+  test:
+
+    docker:
+
+      - image: cimg/base:stable
+
+    steps:
+
+      - checkout
+
+      - run:
+
+          name: "This is build job"
+
+          command: "echo This is build job"
+
+  build:
+
+    docker:
+
+      - image: cimg/base:stable
+
+    steps:
+
+      - checkout
+
+      - run:
+
+          name: "This is test job"
+
+          command: "echo This is test job"
+
+  prod:
+
+    docker:
+
+       - image: cimg/openjdk:16.0
+
+    steps:
+
+      - checkout
+
+>>>>>>> e749646e84ad27e873924bbd4289f50c2c74c2e1
       - run:
           name: Build
           command: mvn -B -DskipTests clean package
@@ -22,10 +70,24 @@ jobs:
           name: Test
           command: mvn test
 
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
+         
+
 workflows:
-  sample: # This is the name of the workflow, feel free to change it to better match your workflow.
-    # Inside the workflow, you define the jobs you want to run.
+
+  test_build_prod:
+
     jobs:
-      - build-and-test
+        
+      - test
+
+      - prod:
+
+          requires:
+
+              - test
+
+      - build:
+
+         requires:
+
+           - prod
