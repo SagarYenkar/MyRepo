@@ -38,11 +38,12 @@ jobs:
 
     docker:
 
-       - image: cimg/openjdk:18.0.2
+       - image: cimg/openjdk:16.0
 
     steps:
-
+      - run: java --version
       - checkout
+      - run: google-chrome --version
 
       - run:
           name: Build
