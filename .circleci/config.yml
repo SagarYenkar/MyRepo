@@ -38,7 +38,7 @@ jobs:
 
     docker:
 
-       - image: cimg/openjdk:16.0
+       - image: cimg/openjdk:18.02
 
     steps:
 
