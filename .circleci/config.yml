@@ -1,23 +1,27 @@
+
 version: 2.1
+
 orbs:
   win: circleci/windows@4.1.1
 jobs:
+ 
    build-and-test:
     executor: win/server-2022
     
- 
+   
     steps:
       - run: 'Write-Host ''Hello, Windows'''
       - checkout
-      - run: mvn package
+     
       - run:
           name: Build
-       
           command: mvn -B -DskipTests clean package
      
       - run:
           name: Test
           command: mvn test
+
+
 workflows:
   sample: 
     jobs:
