@@ -12,14 +12,15 @@ jobs:
     steps:
       - run: 'Write-Host ''Hello, Windows'''
       - checkout
-     
+      - run: mvn package
       - run:
           name: Build
+       
           command: mvn -B -DskipTests clean package
      
       - run:
           name: Test
-          command: mvn
+          command: mvn test
 
 
 workflows:
