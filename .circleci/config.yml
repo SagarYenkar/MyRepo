@@ -1,76 +1,28 @@
 
 version: 2.1
 
+orbs:
+  win: circleci/windows@5.0
 jobs:
  
-  test:
-
-    docker:
-
-      - image: cimg/base:stable
-
+   build-and-test:
+    executor: win/server-2022
+    
+   
     steps:
-
+      - run: 'Write-Host ''Hello, Windows'''
       - checkout
-
-      - run:
-
-          name: "This is build job"
-
-          command: "echo This is build job"
-
-  build:
-
-    docker:
-
-      - image: cimg/base:stable
-
-    steps:
-
-      - checkout
-
-      - run:
-
-          name: "This is test job"
-
-          command: "echo This is test job"
-
-  prod:
-
-    docker:
-
-       - image: cimg/openjdk:16.0
-
-    steps:
-
-      - checkout
-
+     
       - run:
           name: Build
           command: mvn -B -DskipTests clean package
-      # Then run your tests!
+     
       - run:
           name: Test
           command: mvn test
 
-         
 
 workflows:
-
-  test_build_prod:
-
+  sample: 
     jobs:
-        
-      - test
-
-      - prod:
-
-          requires:
-
-              - test
-
-      - build:
-
-         requires:
-
-           - prod
+      - build-and-test
