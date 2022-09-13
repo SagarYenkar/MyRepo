@@ -90,6 +90,9 @@ public class BaseClass {
 		if (targetBrowser == null || targetBrowser.contains("chrome"))
 		{
 			//setup the chromedriver using WebDriverManager
+			String path="C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
+			//path.toString();
+		    path=WebDriverManager.chromedriver().toString();
 	        WebDriverManager.chromedriver().setup();
 	        //Create driver object for Chrome
 	        driver = new ChromeDriver();
