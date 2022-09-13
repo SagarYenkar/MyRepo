@@ -1,143 +1,52 @@
 version: 2.1
+
+
+
 orbs:
-  win: circleci/windows@4.1.1 # The Windows orb give you everything you need to start using the Windows executor.
 
-  jobs:
-  build: # name of your job
-    executor: win/default # executor type
+  win: circleci/windows@4.1.1
 
-    steps:
-      # Commands are run in a Windows virtual machine environment
-      - checkout
-      - run: Write-Host 'Hello, Windows'
 jobs:
+
  
-  test:
 
-    docker:
+   build-and-test:
 
-      - image: cimg/base:stable
+    executor: win/server-2022
 
-    steps:
+   
 
-      - checkout
-
-      - run:
-
-          name: "This is build job"
-
-          command: "echo This is build job"
-
-  build:
-
-    docker:
-
-      - image: cimg/base:stable
+   
 
     steps:
 
+      - run: 'Write-Host ''Hello, Windows'''
+
       - checkout
 
-      - run:
-
-          name: "This is test job"
-
-          command: "echo This is test job"
-
-  prod:
-
-    docker:
-
-       - image: cimg/openjdk:18.0.2
-    working_directory: ~/circleCiTesting
-    environment:
-      # Customize the JVM maximum heap limit
-      MAVEN_OPTS: -Xmx3200m
-    steps:
-      - run: java --version
-      - checkout
-      - restore_cache:
-         keys:
-          - v1-dependencies-{{ checksum "pom.xml" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-         dependencies:
-          pre:
-            # Install Selenium.
-           - curl https://selenium-release.storage.googleapis.com/3.3/selenium-server-standalone-3.3.1.jar > selenium-server-standalone.jar
-           - curl https://chromedriver.storage.googleapis.com/2.28/chromedriver_linux64.zip | gzip -dc > chromedriver
-           - chmod +x chromedriver
-           - 'java -jar selenium-server-standalone.jar -trustAllSSLCertificates -Dwebdriver.chrome.driver=chromedriver':
-          #background: true
-                # Update Google Chrome.           - google-chrome --version
-              - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-              - sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb stable main" >> /etc/apt/sources.list.d/google.list'
-              - sudo apt-get update
-              - sudo apt-get --only-upgrade install google-chrome-stable
-              - google-chrome --version
-        
-      - run: mvn dependency:go-offline
-      - run:
-          name: Install latest version of ChromeDriver Sample
-          command: |
-            sudo wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-            sudo sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-            sudo apt-get update
-            sudo apt-get install google-chrome-unstable
-            sudo wget https://chromedriver.storage.googleapis.com/2.31/chromedriver_linux64.zip
-            sudo unzip chromedriver_linux64.zip
-            sudo rm chromedriver_linux64.zip
-            sudo mv chromedriver /usr/bin/
-            sudo chmod 777 /usr/bin/chromedriver
-            sudo apt-get install libxi6 libgconf-2-4
-            sudo apt-get -y install xvfb gtk2-engines-pixbuf
-            sudo apt-get -y install xfonts-cyrillic xfonts-100dpi xfonts-75dpi xfonts-base xfonts-scalable
-            sudo apt-get install xvfb
-            sudo apt-get -y install imagemagick x11-apps
-      #- run: google-chrome --version
-      - run:
-          name: Running X virtual framebuffer
-          command: Xvfb :0 -ac &
+     
 
       - run:
-          name: Run Tests
-          command: |
-            export DISPLAY=:99
-      - save_cache:
-          paths:
-            - ~/.m2
-          key: v1-dependencies-{{ checksum "pom.xml" }}
-      - run:
+
           name: Build
-          command: mvn -B -DskipTests clean package
-      # Then run your tests!
-      - run:
-          name: Test
-          command: ./mvnw test
 
-      - store_artifacts:
-          path: target/surefire-reports
-          destination: tr1
-      - store_test_results:
-          path: target/surefire-reports
-         
+          command: mvn -B -DskipTests clean package
+
+     
+
+      - run:
+
+          name: Test
+
+          command: mvn test
+
+
+
 
 workflows:
 
-  test_build_prod:
+  sample:
 
     jobs:
-        
-      - test
 
-      - prod:
-
-          requires:
-
-              - test
-
-      - build:
-
-         requires:
-
-           - prod
+      - build-and-test
