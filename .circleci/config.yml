@@ -1,26 +1,51 @@
 version: 2.1
+
 jobs:
-  build:
+ 
+  test:
+
     docker:
-      # specify the version you desire here
-      - image: circleci/openjdk:16-jdk
-      
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
 
+      - image: cimg/base:stable
+
+    steps:
+
+      - checkout
+
+      - run:
+
+          name: "This is build job"
+
+          command: "echo This is build job"
+
+  build:
+
+    docker:
+
+      - image: cimg/base:stable
+
+    steps:
+
+      - checkout
+
+      - run:
+
+          name: "This is test job"
+
+          command: "echo This is test job"
+
+  prod:
+
+    docker:
+
+       - image: cimg/openjdk:16.0
     working_directory: ~/circleCiTesting
-
     environment:
       # Customize the JVM maximum heap limit
       MAVEN_OPTS: -Xmx3200m
-    
     steps:
+      - run: java --version
       - checkout
-
-      # Download and cache dependencies
-
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "pom.xml" }}
@@ -28,7 +53,6 @@ jobs:
           - v1-dependencies-
 
       - run: mvn dependency:go-offline
-
       - run:
           name: Install latest version of ChromeDriver Sample
           command: |
@@ -36,9 +60,6 @@ jobs:
             sudo sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
             sudo apt-get update
             sudo apt-get install google-chrome-unstable
-      - run:
-          name: Install latest version of ChromeDriver Sample
-          command: |
             sudo wget https://chromedriver.storage.googleapis.com/2.31/chromedriver_linux64.zip
             sudo unzip chromedriver_linux64.zip
             sudo rm chromedriver_linux64.zip
@@ -49,6 +70,7 @@ jobs:
             sudo apt-get -y install xfonts-cyrillic xfonts-100dpi xfonts-75dpi xfonts-base xfonts-scalable
             sudo apt-get install xvfb
             sudo apt-get -y install imagemagick x11-apps
+      - run: google-chrome --version
       - run:
           name: Running X virtual framebuffer
           command: Xvfb :0 -ac &
@@ -61,12 +83,36 @@ jobs:
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
-        
-      # run tests!
-      - run: mvn test
-
+      - run:
+          name: Build
+          command: mvn -B -DskipTests clean package
+      # Then run your tests!
+      - run:
+          name: Test
+          command: mvn test
       - store_artifacts:
           path: target/surefire-reports
           destination: tr1
       - store_test_results:
           path: target/surefire-reports
+         
+
+workflows:
+
+  test_build_prod:
+
+    jobs:
+        
+      - test
+
+      - prod:
+
+          requires:
+
+              - test
+
+      - build:
+
+         requires:
+
+           - prod
