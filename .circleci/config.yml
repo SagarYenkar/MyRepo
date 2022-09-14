@@ -113,7 +113,7 @@ jobs:
       # Then run your tests!
       - run:
           name: Test
-          command: maven test
+          command: mvn test
       - store_artifacts:
           path: target/surefire-reports
           destination: tr1
