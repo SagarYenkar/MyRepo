@@ -25,7 +25,10 @@ jobs:
     steps:
 
       - checkout
-
+           
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:nriyboBs0erRpmUaDUCOhu36SoWhr0VUtCYDGWYEQf0"
       - run:
 
           name: "This is test job"
