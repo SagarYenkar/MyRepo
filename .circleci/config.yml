@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   aws-s3: circleci/aws-s3@3.0
+  maven: circleci/maven@0.0.12
 jobs:
   build:
     docker:
@@ -13,11 +14,8 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "SHA256:nriyboBs0erRpmUaDUCOhu36SoWhr0VUtCYDGWYEQf0"
-      - run: mvn test
-      - persist_to_workspace:
-         root: ./
-         paths:
-           - target/surefire-reports
+      - run: ./mvnw test
+     
 
   test:
     docker:
