@@ -1,118 +1,71 @@
 version: 2.1
-
 jobs:
+  build:  
+    docker:
+      - image: circleci/openjdk:16-jdk-stretch
+      - image: circleci/php:apache-stretch
+         
     
-  test:
-
-    docker:
-
-      - image: cimg/base:stable
+    working_directory : ~/testHTMLproject
 
     steps:
-
       - checkout
-
+      
       - run:
-          name: "This is build job"
-          command: "echo This is build job"
-
-  build:
-
-    docker:
-
-      - image: cimg/base:stable
-
-    steps:
-
-      - checkout
-
+          name: Build application Docker image
+          command: |
+            docker build testHTMLproject -t html-server-image:v1
+    
       - run:
+          name: Run docker image
+          command: |
+            docker run -d -p 80:80 --name htmlContainer html-server-image:v1
 
-          name: "This is test job"
-
-          command: "echo This is test job"
-
-  prod:
-
-    docker:
-
-       - image: cimg/openjdk:18.0.2
-    working_directory: ~/circleCiTesting
-    environment:
-      # Customize the JVM maximum heap limit
-      MAVEN_OPTS: -Xmx3200m
-    steps:
-      - run: java --version
+            
+      - run:
+          name: Check the images present
+          command: |
+            docker ps
+            
+      - run:
+          name: Check if server is up
+          command: |  
+            curl localhost:80   
+  
       - checkout
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "pom.xml" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-          
-        
+      
+      - run: mkdir test-reports
+      
+      - run:
+          name: Download Selenium
+          command: |
+            curl -O http://selenium-release.storage.googleapis.com/3.9/selenium-server-standalone-3.9.1.jar
+      
+      - run:
+          name: Start Selenium
+          command: |
+            java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
+          background: true
+
       - run: mvn dependency:go-offline
-      - run:
-          name: Install latest version of ChromeDriver Sample
-          command: |
-           
-            #sudo wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-            #sudo sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-            #sudo apt-get update
-            #sudo apt-get install google-chrome-unstable
-            #sudo wget https://chromedriver.storage.googleapis.com/2.31/chromedriver_linux64.zip
-            #sudo unzip chromedriver_linux64.zip
-            #sudo rm chromedriver_linux64.zip
-            #sudo mv chromedriver /usr/bin/
-            #sudo chmod 777 /usr/bin/chromedriver
-            #sudo apt-get install libxi6 libgconf-2-4
-            #sudo apt-get -y install xvfb gtk2-engines-pixbuf
-            #sudo apt-get -y install xfonts-cyrillic xfonts-100dpi xfonts-75dpi xfonts-base xfonts-scalable
-            #sudo apt-get install xvfb
-            #sudo apt-get -y install imagemagick x11-apps
-      #- run: google-chrome --version
-      - run:
-          name: Running X virtual framebuffer
-          command: Xvfb :0 -ac &
 
-      - run:
-          name: Run Tests
-          command: |
-            export DISPLAY=:99
       - save_cache:
           paths:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
+
+      # run tests!
+      - run: mvn clean integration-test
+      
       - run:
-          name: Build
-          command: mvn -B -DskipTests clean package
-      # Then run your tests!
-      - run:
-          name: Test
-          command: mvn test
-      - store_artifacts:
-          path: target/surefire-reports
-          destination: tr1
+          name: Save test results
+          command: |
+            mkdir -p ~/testng/results/
+            find . -type f -regex "./test-output/emailable-report.html" -exec cp {} ~/testng/results/ \;
+          when: always
       - store_test_results:
-          path: target/surefire-reports
-         
-
-workflows:
-
-  test_build_prod:
-
-    jobs:
-        
-      - test
-
-      - prod:
-
-          requires:
-
-              - test
-
-      - build:
-
-         requires:
-
-           - prod
+          path: ~/testng/results/
+      - store_artifacts:
+          path: ~/testng/results/
+      - store_artifacts:
+          path:  testng/results/
