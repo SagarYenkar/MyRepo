@@ -1,58 +1,71 @@
-version: 2.1
-orbs:
-  aws-s3: circleci/aws-s3@3.0
-  maven: circleci/maven@0.0.12
+version: 2
 jobs:
-  build:
+  build:  
     docker:
-      - image: cimg/openjdk:17.0.1
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
-    steps:
-      - checkout
-      - add_ssh_keys:
-          fingerprints:
-            - "SHA256:nriyboBs0erRpmUaDUCOhu36SoWhr0VUtCYDGWYEQf0"
-      - run: ./mvnw test
-     
+      - image: circleci/openjdk:8-jdk-stretch
+      - image: circleci/php:apache-stretch
+         
+    
+    working_directory : ~/testHTMLproject
 
-  test:
-    docker:
-      - image: cimg/openjdk:17.0.1
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
     steps:
       - checkout
-      - attach_workspace:
-          at: ./target
-      - run: mvn clean install
-  Deploy:
-    docker:
-      - image: 'cimg/python:3.6'
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ./target
-      - aws-s3/sync:
-          arguments: |
-            --acl public-read \
-            --cache-control "max-age=86400"
-          from: target
-          to: 's3://demoproject17/demo/'
       
-workflows:
-  version: 2
+      - run:
+          name: Build application Docker image
+          command: |
+            docker build testHTMLproject -t html-server-image:v1
+    
+      - run:
+          name: Run docker image
+          command: |
+            docker run -d -p 80:80 --name htmlContainer html-server-image:v1
 
-  build-then-test-then-Deploy:
-    jobs:
-      - build
-      - test:
-          requires:
-            - build
-      - Deploy:
-          requires:
-            - test
             
-             
+      - run:
+          name: Check the images present
+          command: |
+            docker ps
+            
+      - run:
+          name: Check if server is up
+          command: |  
+            curl localhost:80   
+  
+      - checkout
+      
+      - run: mkdir test-reports
+      
+      - run:
+          name: Download Selenium
+          command: |
+            curl -O http://selenium-release.storage.googleapis.com/3.5/selenium-server-standalone-3.5.3.jar
+      
+      - run:
+          name: Start Selenium
+          command: |
+            java -jar selenium-server-standalone-3.5.3.jar -log test-reports/selenium.log
+          background: true
+
+      - run: mvn dependency:go-offline
+
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: v1-dependencies-{{ checksum "pom.xml" }}
+
+      # run tests!
+      - run: mvn clean integration-test
+      
+      - run:
+          name: Save test results
+          command: |
+            mkdir -p ~/testng/results/
+            find . -type f -regex "./test-output/emailable-report.html" -exec cp {} ~/testng/results/ \;
+          when: always
+      - store_test_results:
+          path: ~/testng/results/
+      - store_artifacts:
+          path: ~/testng/results/
+      - store_artifacts:
+          path:  testng/results/
